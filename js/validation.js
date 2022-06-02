@@ -4,7 +4,7 @@ const dd_mm_yyyy = /^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[0-2])\1\d{4}$
 const yyyy_mm_dd = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 const phoneNumber = /^\(\+\d{2,3}\)\d{10}$/;
 const text = /[a-zA-Z]/;
-const rol = ['Rol1','Rol2','Rol3'];
+const rol = /(Rol1|Rol2|Rol3)/;
 
 const url = 'file:///C:/Users/yahir/Escritorio/pruebaTecnica/index.html'
 
@@ -14,7 +14,8 @@ const globaLabels = [
    'email',
    'birthDate',
    'registerDate',
-   'responsabilities'
+   'responsabilities',
+   'rol'
 ]
 
 const globalRegexs = [
@@ -24,28 +25,29 @@ const globalRegexs = [
    yyyy_mm_dd,
    yyyy_mm_dd,
    text,
+   rol
 ]
 
-const data = document.querySelectorAll("input")
-const selectData = document.querySelector("#inputGroupSelect01")
+let validations = {
+   0:false,
+   1:false,
+   2:false,
+   3:false,
+   4:false,
+   5:false,
+   6:false
+ };
 
+const data = document.querySelectorAll(".ts-data")
 const send = document.querySelector(".ts-send")
 
 send.addEventListener('click',(e)=>{
    e.preventDefault()
-   validaciones(data, selectData)
+   // console.log(data)
+   checkForm(data)
 })
 
-const validaciones = (data, selectData) =>{
-   let validations = {
-      0:false,
-      1:false,
-      2:false,
-      3:false,
-      4:false,
-      5:false,
-      6:false
-    };
+const checkForm = (data) =>{
 
    data.forEach((value,index)=>{
       if(globaLabels.includes(value.ariaLabel) && value.value.length > 0){
@@ -54,9 +56,7 @@ const validaciones = (data, selectData) =>{
       }
    })
 
-   selectValidation(selectData, validations)
-
-   console.log(validations)
+   // console.log(validations)
 
    if(!Object.values(validations).includes(false)){
       window.location.replace(url)
@@ -66,13 +66,6 @@ const validaciones = (data, selectData) =>{
 
 const regexValidation = (text, regex, validations, index) =>{
    const flag = regex.test(text)
-   console.log(text)
+   // console.log(index)
    validations[index] = flag;
-}
-
-const selectValidation = (selectData, validations) =>{
-   console.log(selectData.value)
-   if(rol.includes(selectData.value)){
-      validations[6] = true
-   }
 }
