@@ -6,7 +6,7 @@ const phoneNumber = /^\(\+\d{2,3}\)\d{10}$/;
 const text = /[a-zA-Z]/;
 const rol = /(Rol1|Rol2|Rol3)/;
 
-const url = 'file:///C:/Users/yahir/Escritorio/pruebaTecnica/index.html'
+const url = '../index.html'
 
 const globaLabels = [
    'fullName',
@@ -40,6 +40,7 @@ let validations = {
 
 const data = document.querySelectorAll(".ts-data")
 const send = document.querySelector(".ts-send")
+const error = document.querySelector(".js-error")
 
 send.addEventListener('click',(e)=>{
    e.preventDefault()
@@ -60,6 +61,8 @@ const checkForm = (data) =>{
 
    if(!Object.values(validations).includes(false)){
       window.location.replace(url)
+   } else {
+      error.style.visibility = "visible";
    }
 
 }
